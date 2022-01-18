@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:pwd_app/screens/landingScreen/components/home_screen.dart';
+import 'package:pwd_app/screens/myDogsScreen/myDogs_screen.dart';
 
 class LandingScreen extends StatefulWidget {
   const LandingScreen({Key? key}) : super(key: key);
@@ -10,7 +12,7 @@ class LandingScreen extends StatefulWidget {
 
 class _LandingScreenState extends State<LandingScreen> {
 
-  var _currentIndex = 1;
+  var _currentIndex = 0;
 
   var tabs = [
     HomeScreen(),
@@ -80,16 +82,21 @@ class _LandingScreenState extends State<LandingScreen> {
                     ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 4.0),
-                  child: Row(
-                    children: [
-                      Image.asset('assets/126333676916257259133595.png', color: Colors.white.withOpacity(0.4), height: 24, width: 24,),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 16.0),
-                        child: Text("My Dogs", style: TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 14),),
-                      ),
-                    ],
+                InkWell(
+                  onTap: (){
+                    Get.to(MyDogsScreen());
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 4.0),
+                    child: Row(
+                      children: [
+                        Image.asset('assets/126333676916257259133595.png', color: Colors.white.withOpacity(0.4), height: 24, width: 24,),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 16.0),
+                          child: Text("My Dogs", style: TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 14),),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 Padding(
