@@ -85,7 +85,16 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
         );
       }
     } else {
-      return const SizedBox();
+      return MaterialButton(
+        onPressed: () {
+          setState(() {
+            introKey.currentState?.next();
+          });
+        },
+        shape: const CircleBorder(),
+        color: Colors.yellow[700],
+        child: const Icon(Icons.arrow_forward),
+      );
     }
   }
 

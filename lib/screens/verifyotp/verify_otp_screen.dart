@@ -119,3 +119,5 @@ class VerifyOTPScreen extends StatelessWidget {
     );
   }
 }
+
+// Landing - HomePage, SideBar (Normal), Choose Your Plan (onClick of BUY NOW - HomePage), MyDogs (onClick of MyDogs on SideBar)
