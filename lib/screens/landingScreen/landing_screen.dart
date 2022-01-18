@@ -38,9 +38,14 @@ class _LandingScreenState extends State<LandingScreen> {
               children: [
                 Row(
                   children: [
-                    Icon(
-                      Icons.arrow_back,
-                      color: Colors.white.withOpacity(0.4),
+                    InkWell(
+                      onTap: () {
+                        Get.back();
+                      },
+                      child: Icon(
+                        Icons.arrow_back,
+                        color: Colors.white.withOpacity(0.4),
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),

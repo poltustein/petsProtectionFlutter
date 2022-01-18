@@ -129,7 +129,7 @@ class LoginScreen extends StatelessWidget {
                     if (emailController.text.isNotEmpty && passwordController.text.isNotEmpty) {
                       final networkResponse = await WebService().loginUser(emailController.text, passwordController.text);
                       if (networkResponse.status == "SUCCESS") {
-                        Get.to(LandingScreen());
+                        Get.off(LandingScreen());
                       }
                       Toast.show(networkResponse.reason, context,
                           duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);

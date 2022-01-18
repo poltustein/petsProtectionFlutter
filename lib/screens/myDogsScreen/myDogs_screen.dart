@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class MyDogsScreen extends StatelessWidget {
   const MyDogsScreen({Key? key}) : super(key: key);
@@ -15,9 +16,14 @@ class MyDogsScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
                   children: [
-                    Icon(
-                      Icons.arrow_back,
-                      color: Colors.white.withOpacity(0.5),
+                    InkWell(
+                      onTap: () {
+                        Get.back();
+                      },
+                      child: Icon(
+                        Icons.arrow_back,
+                        color: Colors.white.withOpacity(0.5),
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(16.0),
