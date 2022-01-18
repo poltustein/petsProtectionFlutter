@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:pwd_app/screens/landingScreen/landing_screen.dart';
 import 'package:pwd_app/screens/signup/signup_screen.dart';
 import 'package:pwd_app/webservice/webservice.dart';
+import 'package:toast/toast.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -126,8 +127,12 @@ class LoginScreen extends StatelessWidget {
                   minWidth: double.infinity,
                   onPressed: () async {
                     if (emailController.text.isNotEmpty && passwordController.text.isNotEmpty) {
-                      await WebService().loginUser(emailController.text, passwordController.text);
-                      Get.to(LandingScreen());
+                      final networkResponse = await WebService().loginUser(emailController.text, passwordController.text);
+                      if (networkResponse.status == "SUCCESS") {
+                        Get.to(LandingScreen());
+                      }
+                      Toast.show(networkResponse.reason, context,
+                          duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
                     }
                   },
                   color: Colors.yellow[700],
