@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:introduction_screen/introduction_screen.dart';
+import 'package:pwd_app/screens/planScreen/plan_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -152,7 +154,9 @@ class HomeScreen extends StatelessWidget {
                           Text("Protection Dogs GOLD\nStarting at \$20/month", style: TextStyle(color: Colors.white, fontSize: 12),),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: MaterialButton(onPressed: (){}, color: Colors.yellow[700], child: Text("BUY NOW", style: TextStyle(fontSize: 12),), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),),
+                            child: MaterialButton(onPressed: (){
+                              Get.to(PlanScreen());
+                            }, color: Colors.yellow[700], child: Text("BUY NOW", style: TextStyle(fontSize: 12),), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),),
                           )
                         ],
                       )
