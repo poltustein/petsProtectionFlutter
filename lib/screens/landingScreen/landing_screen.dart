@@ -1,15 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:pwd_app/screens/landingScreen/components/home_screen.dart';
 
-class LandingScreen extends StatelessWidget {
+class LandingScreen extends StatefulWidget {
   const LandingScreen({Key? key}) : super(key: key);
 
   @override
+  State<LandingScreen> createState() => _LandingScreenState();
+}
+
+class _LandingScreenState extends State<LandingScreen> {
+
+  var _currentIndex = 1;
+
+  var tabs = [
+    HomeScreen(),
+    Text("ChatScreen"),
+    Text("SearchScreen"),
+    Text("AddDog Screen"),
+    Text("AccountScreen"),
+  ];
+
+  @override
   Widget build(BuildContext context) {
+
     return SafeArea(
       child: Scaffold(
-        body: Container(
-          color: Colors.black,
-        ),
+        body: tabs[_currentIndex],
         drawer: Drawer(
           backgroundColor: Colors.black,
           child: Padding(
@@ -130,8 +146,18 @@ class LandingScreen extends StatelessWidget {
           ),
         ),
         bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _currentIndex,
+          onTap: (index) {
+            setState(() {
+              _currentIndex = index;
+            });
+          },
           type: BottomNavigationBarType.fixed,
           backgroundColor: Color(0xff191919),
+          selectedItemColor: Colors.yellow[700],
+          unselectedItemColor: Colors.white.withOpacity(0.4),
+          selectedFontSize: 12,
+          unselectedFontSize: 12,
           items: [
             BottomNavigationBarItem(
                 icon: Icon(Icons.home_outlined), label: "Home"),
