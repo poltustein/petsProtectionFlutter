@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pwd_app/screens/addDogScreen/addDog_screen.dart';
 import 'package:pwd_app/screens/landingScreen/components/home_screen.dart';
 import 'package:pwd_app/screens/myDogsScreen/myDogs_screen.dart';
 
@@ -18,7 +19,7 @@ class _LandingScreenState extends State<LandingScreen> {
     HomeScreen(),
     Text("ChatScreen"),
     Text("SearchScreen"),
-    Text("AddDog Screen"),
+    AddDogScreen(),
     Text("AccountScreen"),
   ];
 
