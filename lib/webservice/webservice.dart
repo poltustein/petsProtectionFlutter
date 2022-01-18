@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:pwd_app/models/login/login.dart';
+import 'package:pwd_app/models/otp_response.dart';
 import 'package:pwd_app/models/signup_response.dart';
 
 class WebService {
@@ -51,6 +52,27 @@ class WebService {
       return SignupResponse.fromJson(json);
     } else {
       throw Exception("Error signing in user!");
+    }
+  }
+
+  Future<OtpResponse?> verifyOTP(String email, String otp) async {
+    Map<String, String> requestHeaders = {
+      "Content-type": "application/json",
+      'Authorization': 'Bearer J0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9sdkjdskjh'
+    };
+
+    Map<String, String> body = {"emailId": email, "otp": otp};
+
+    String url =
+        "http://ec2-13-40-57-235.eu-west-2.compute.amazonaws.com:8080/petsProtection/prelogin/verifyOtp/";
+    final response = await http.post(Uri.parse(url),
+        body: json.encode(body), headers: requestHeaders);
+
+    if (response.statusCode == 200) {
+      final json = jsonDecode(response.body);
+      return OtpResponse.fromJson(json);
+    } else {
+      return null;
     }
   }
 }

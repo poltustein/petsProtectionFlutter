@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pwd_app/screens/landingScreen/landing_screen.dart';
+import 'package:pwd_app/screens/verifyotp/verify_otp_screen.dart';
 import 'package:pwd_app/webservice/webservice.dart';
+import 'package:toast/toast.dart';
 
 class SignupScreen extends StatelessWidget {
   const SignupScreen({Key? key}) : super(key: key);
@@ -165,9 +167,13 @@ class SignupScreen extends StatelessWidget {
                         emailTE.text.isNotEmpty &&
                         phoneTE.text.isNotEmpty &&
                         passwordTE.text.isNotEmpty) {
-                      await WebService().signupUser(nameTE.text, emailTE.text,
+                      final networkResponse = await WebService().signupUser(nameTE.text, emailTE.text,
                           phoneTE.text, passwordTE.text);
-                      Get.to(LandingScreen());
+                      if (networkResponse.status == "SUCCESS") {
+                        Get.to(VerifyOTPScreen(email: emailTE.text,));
+                      }
+                      Toast.show(networkResponse.reason, context,
+                          duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
                     }
                   },
                   color: Colors.yellow[700],
