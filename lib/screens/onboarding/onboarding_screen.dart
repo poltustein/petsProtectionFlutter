@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:introduction_screen/introduction_screen.dart';
+import 'package:pwd_app/screens/login/login_screen.dart';
 
 import '../../main.dart';
 
@@ -60,7 +61,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
           padding: const EdgeInsets.symmetric(horizontal: 36),
           onPressed: () {
             setState(() {
-              Get.off(const HomePage());
+              Get.off(LoginScreen());
             });
           },
           shape: const RoundedRectangleBorder(
