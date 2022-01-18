@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pwd_app/screens/landingScreen/landing_screen.dart';
 import 'package:pwd_app/screens/signup/signup_screen.dart';
+import 'package:pwd_app/webservice/webservice.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
+    final emailController = TextEditingController();
+    final passwordController = TextEditingController();
+
     return Material(
       child: Stack(
         children: [
@@ -64,6 +70,7 @@ class LoginScreen extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 24),
                     child: TextField(
+                      controller: emailController,
                       cursorColor: Colors.white,
                       decoration: InputDecoration(
                           border: InputBorder.none,
@@ -85,6 +92,7 @@ class LoginScreen extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 24),
                     child: TextField(
+                      controller: passwordController,
                       cursorColor: Colors.white,
                       decoration: InputDecoration(
                           suffixIcon: IconButton(
@@ -116,7 +124,12 @@ class LoginScreen extends StatelessWidget {
                 child: MaterialButton(
                   height: 60,
                   minWidth: double.infinity,
-                  onPressed: () {},
+                  onPressed: () async {
+                    if (emailController.text.isNotEmpty && passwordController.text.isNotEmpty) {
+                      await WebService().loginUser(emailController.text, passwordController.text);
+                      Get.to(LandingScreen());
+                    }
+                  },
                   color: Colors.yellow[700],
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(32)),

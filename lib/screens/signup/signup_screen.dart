@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pwd_app/screens/landingScreen/landing_screen.dart';
+import 'package:pwd_app/webservice/webservice.dart';
 
 class SignupScreen extends StatelessWidget {
   const SignupScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final emailTE = TextEditingController();
+    final passwordTE = TextEditingController();
+    final phoneTE = TextEditingController();
+    final nameTE = TextEditingController();
+
     return Material(
       child: Stack(
         children: [
@@ -63,6 +70,7 @@ class SignupScreen extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 24),
                     child: TextField(
+                      controller: nameTE,
                       cursorColor: Colors.white,
                       decoration: InputDecoration(
                           border: InputBorder.none,
@@ -83,6 +91,7 @@ class SignupScreen extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 24),
                     child: TextField(
+                      controller: emailTE,
                       cursorColor: Colors.white,
                       decoration: InputDecoration(
                           border: InputBorder.none,
@@ -103,6 +112,7 @@ class SignupScreen extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 24),
                     child: TextField(
+                      controller: phoneTE,
                       cursorColor: Colors.white,
                       decoration: InputDecoration(
                           border: InputBorder.none,
@@ -124,6 +134,7 @@ class SignupScreen extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 24),
                     child: TextField(
+                      controller: passwordTE,
                       cursorColor: Colors.white,
                       decoration: InputDecoration(
                           suffixIcon: IconButton(
@@ -149,7 +160,16 @@ class SignupScreen extends StatelessWidget {
                 child: MaterialButton(
                   height: 60,
                   minWidth: double.infinity,
-                  onPressed: () {},
+                  onPressed: () async {
+                    if (nameTE.text.isNotEmpty &&
+                        emailTE.text.isNotEmpty &&
+                        phoneTE.text.isNotEmpty &&
+                        passwordTE.text.isNotEmpty) {
+                      await WebService().signupUser(nameTE.text, emailTE.text,
+                          phoneTE.text, passwordTE.text);
+                      Get.to(LandingScreen());
+                    }
+                  },
                   color: Colors.yellow[700],
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(32)),
