@@ -1,8 +1,16 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pwd_app/models/SubscriptionPlans.dart';
+import 'package:pwd_app/screens/ProfileScreen/profile_screen.dart';
 import 'package:pwd_app/screens/addDogScreen/addDog_screen.dart';
+import 'package:pwd_app/screens/categories/categoriesList.dart';
 import 'package:pwd_app/screens/landingScreen/components/home_screen.dart';
 import 'package:pwd_app/screens/myDogsScreen/myDogs_screen.dart';
+import 'package:pwd_app/screens/planScreen/plan_screen.dart';
+import 'package:pwd_app/webservice/webservice.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LandingScreen extends StatefulWidget {
   const LandingScreen({Key? key}) : super(key: key);
@@ -17,14 +25,36 @@ class _LandingScreenState extends State<LandingScreen> {
 
   var tabs = [
     HomeScreen(),
-    Text("ChatScreen"),
+    CategoriesList(),
     Text("SearchScreen"),
     AddDogScreen(),
-    Text("AccountScreen"),
+    ProfileScreen(),
   ];
+
+  Future<String> read (String key) async {
+    final prefs = await SharedPreferences.getInstance();
+    return await prefs.getString(key) ?? "";
+  }
+
+  String name = "";
+  String contact = "";
+
+  void initState(){
+
+    read('name').then((value) => setState((){
+      name = value;
+    }));
+
+    read('contact').then((value) => setState((){
+      contact = value;
+    }));
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+
 
     return SafeArea(
       child: Scaffold(
@@ -70,22 +100,27 @@ class _LandingScreenState extends State<LandingScreen> {
                   padding: const EdgeInsets.only(top: 16.0, bottom: 4),
                   child: Text("Welcome", style: TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 12),),
                 ),
-                Text("Sabrina", style: TextStyle(color: Colors.white, fontSize: 20),),
+                Text(name, style: TextStyle(color: Colors.white, fontSize: 20),),
                 Padding(
                   padding: const EdgeInsets.only(top: 4.0),
-                  child: Text("+44 7700 900915", style: TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 14),),
+                  child: Text(contact, style: TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 14),),
                 ),
                 Padding(padding: EdgeInsets.all(48)),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 4.0),
-                  child: Row(
-                    children: [
-                      Icon(Icons.account_circle_outlined, color: Colors.white.withOpacity(0.4),),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 16.0),
-                        child: Text("Profile", style: TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 14),),
-                      ),
-                    ],
+                InkWell(
+                  onTap: (){
+                    Get.to(ProfileScreen());
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 4.0),
+                    child: Row(
+                      children: [
+                        Icon(Icons.account_circle_outlined, color: Colors.white.withOpacity(0.4),),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 16.0),
+                          child: Text("Profile", style: TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 14),),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 InkWell(
@@ -117,16 +152,23 @@ class _LandingScreenState extends State<LandingScreen> {
                     ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 4.0),
-                  child: Row(
-                    children: [
-                      Icon(Icons.tv, color: Colors.white.withOpacity(0.4),),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 16.0),
-                        child: Text("Membership", style: TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 14),),
-                      ),
-                    ],
+                InkWell(
+                  onTap: () async{
+                    final SubscriptionPlans plansResponse = await WebService().subscriptionPlans('piyushgoel28@gmail.com','eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwaXl1c2hnb2VsMjhAZ21haWwuY29tIn0.QP8ywW_c1_ZXzXrJlNxtxXNxvf6AQ6N2w2K_U5K7GVsDTqL725o-TIt1s52BX5bo2Wv7VzZuMvi-JBPr8VuCgQ');
+                    //log(plansResponse.toJson().toString());
+                    Get.to(PlanScreen(plans: plansResponse));
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 4.0),
+                    child: Row(
+                      children: [
+                        Icon(Icons.tv, color: Colors.white.withOpacity(0.4),),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 16.0),
+                          child: Text("Membership", style: TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 14),),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 Padding(
@@ -175,7 +217,7 @@ class _LandingScreenState extends State<LandingScreen> {
             BottomNavigationBarItem(
                 icon: Icon(Icons.home_outlined), label: "Home"),
             BottomNavigationBarItem(
-                icon: Icon(Icons.chat_bubble_outline), label: "Chat"),
+                icon: Icon(Icons.ac_unit), label: "Categories"),
             BottomNavigationBarItem(icon: Icon(Icons.search), label: "Search"),
             BottomNavigationBarItem(
                 icon: Icon(Icons.card_giftcard), label: "Add Dog"),

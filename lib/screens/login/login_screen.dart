@@ -4,15 +4,24 @@ import 'package:pwd_app/screens/landingScreen/landing_screen.dart';
 import 'package:pwd_app/screens/signup/signup_screen.dart';
 import 'package:pwd_app/webservice/webservice.dart';
 import 'package:toast/toast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
+
+
+  @override
+  _LoginScreen createState() => _LoginScreen();
+}
+
+
+class _LoginScreen extends State<LoginScreen> {
+  bool isPasswordShow = false;
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-
-    final emailController = TextEditingController();
-    final passwordController = TextEditingController();
 
     return Material(
       child: Stack(
@@ -93,14 +102,27 @@ class LoginScreen extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 24),
                     child: TextField(
+                      obscureText: isPasswordShow?false:true,
                       controller: passwordController,
                       cursorColor: Colors.white,
                       decoration: InputDecoration(
                           suffixIcon: IconButton(
                               onPressed: () {},
-                              icon: Icon(
-                                Icons.remove_red_eye_outlined,
-                                color: Colors.white.withOpacity(0.4),
+                              icon: InkWell(
+                                onTap: (){
+                                  setState(() {
+                                    isPasswordShow = !isPasswordShow;
+                                    //passwordController.text = passwordController.text;
+                                  });
+
+                                },
+                                child: isPasswordShow?Icon(
+                                  Icons.visibility,
+                                  color: Colors.white.withOpacity(0.4),
+                                ):Icon(
+                                  Icons.visibility_off,
+                                  color: Colors.white.withOpacity(0.4),
+                                ),
                               )),
                           border: InputBorder.none,
                           hintText: "Password",
@@ -129,9 +151,16 @@ class LoginScreen extends StatelessWidget {
                     if (emailController.text.isNotEmpty && passwordController.text.isNotEmpty) {
                       final networkResponse = await WebService().loginUser(emailController.text, passwordController.text);
                       if (networkResponse.status == "SUCCESS") {
+                        final prefs = await SharedPreferences.getInstance();
+                        prefs.setString('emailid', networkResponse.emailId!);
+                        prefs.setString('name', networkResponse.name!);
+                        prefs.setString('contact', networkResponse.contact!);
+                        prefs.setString('token', networkResponse.token!);
+                        prefs.commit();
+
                         Get.off(LandingScreen());
                       }
-                      Toast.show(networkResponse.reason, context,
+                      Toast.show(networkResponse.reason!, context,
                           duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
                     }
                   },
@@ -144,29 +173,29 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 2.0),
-                child: MaterialButton(
-                  height: 60,
-                  minWidth: double.infinity,
-                  onPressed: () {},
-                  color: Colors.white,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(32)),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.add_to_home_screen_outlined),
-                      Text(
-                        "Sign In with Google",
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              // Padding(
+              //   padding:
+              //       const EdgeInsets.symmetric(horizontal: 16.0, vertical: 2.0),
+              //   child: MaterialButton(
+              //     height: 60,
+              //     minWidth: double.infinity,
+              //     onPressed: () {},
+              //     color: Colors.white,
+              //     shape: RoundedRectangleBorder(
+              //         borderRadius: BorderRadius.circular(32)),
+              //     child: Row(
+              //       mainAxisAlignment: MainAxisAlignment.center,
+              //       children: [
+              //         Icon(Icons.add_to_home_screen_outlined),
+              //         Text(
+              //           "Sign In with Google",
+              //           style: TextStyle(
+              //               fontSize: 18, fontWeight: FontWeight.bold),
+              //         ),
+              //       ],
+              //     ),
+              //   ),
+              // ),
               Padding(
                 padding: const EdgeInsets.only(top: 24),
                 child: Row(

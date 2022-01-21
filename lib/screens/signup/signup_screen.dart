@@ -5,15 +5,24 @@ import 'package:pwd_app/screens/verifyotp/verify_otp_screen.dart';
 import 'package:pwd_app/webservice/webservice.dart';
 import 'package:toast/toast.dart';
 
-class SignupScreen extends StatelessWidget {
+class SignupScreen extends StatefulWidget {
   const SignupScreen({Key? key}) : super(key: key);
+
+
+  @override
+  _SignupScreen createState() => _SignupScreen();
+}
+
+class _SignupScreen extends State<SignupScreen> {
+  bool isPasswordShow = false;
+  final emailTE = TextEditingController();
+  final passwordTE = TextEditingController();
+  final phoneTE = TextEditingController();
+  final nameTE = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    final emailTE = TextEditingController();
-    final passwordTE = TextEditingController();
-    final phoneTE = TextEditingController();
-    final nameTE = TextEditingController();
+
 
     return Material(
       child: Stack(
@@ -137,14 +146,27 @@ class SignupScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 24),
                     child: TextField(
                       controller: passwordTE,
+                      obscureText: isPasswordShow?false:true,
                       cursorColor: Colors.white,
                       decoration: InputDecoration(
                           suffixIcon: IconButton(
                               onPressed: () {},
-                              icon: Icon(
-                                Icons.remove_red_eye_outlined,
+                              icon: InkWell(
+                                    onTap: (){
+                                    setState(() {
+                                    isPasswordShow = !isPasswordShow;
+                                    //passwordController.text = passwordController.text;
+                                  });
+
+                                    },
+                                  child: isPasswordShow?Icon(
+                                  Icons.visibility,
+                                  color: Colors.white.withOpacity(0.4),
+                                  ):Icon(
+                                  Icons.visibility_off,
                                 color: Colors.white.withOpacity(0.4),
-                              )),
+                              ),
+                              ),),
                           border: InputBorder.none,
                           hintText: "Password",
                           hintStyle:
@@ -172,7 +194,7 @@ class SignupScreen extends StatelessWidget {
                       if (networkResponse.status == "SUCCESS") {
                         Get.to(VerifyOTPScreen(email: emailTE.text,));
                       }
-                      Toast.show(networkResponse.reason, context,
+                      Toast.show(networkResponse.reason!, context,
                           duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
                     }
                   },

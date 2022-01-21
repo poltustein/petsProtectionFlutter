@@ -126,9 +126,17 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
       pages: [
         PageViewModel(
           bodyWidget: Container(),
-          titleWidget: Container(),
+          titleWidget: Container(
+              alignment: Alignment.center,
+              margin: EdgeInsets.only(top:150.0),
+              child: Text("An Inside to the life at Protection Dogs Worldwide",textAlign: TextAlign.center, style:TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 25.0,
+              )),
+          ),
           image: _buildFullscreenImage('assets/Protection Dogs Worldwide-4.jpg',
-              "Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit\nconsectetur adipiscing elit"),
+              ""),
           decoration: pageDecoration.copyWith(
             contentMargin: const EdgeInsets.symmetric(horizontal: 16),
             fullScreen: true,
@@ -138,10 +146,18 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
         ),
         PageViewModel(
           bodyWidget: Container(),
-          titleWidget: Container(),
+          titleWidget: Container(
+            alignment: Alignment.center,
+            margin: EdgeInsets.only(top:150.0),
+            child: Text("The Ultimate Personal & Family Protection Dogs",textAlign: TextAlign.center, style:TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 25.0,
+            )),
+          ),
           image: _buildFullscreenImage(
               'assets/Protection Dogs Worldwide-76.jpg',
-              "Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit\nconsectetur adipiscing elit"),
+              ""),
           decoration: pageDecoration.copyWith(
             contentMargin: const EdgeInsets.symmetric(horizontal: 16),
             fullScreen: true,
@@ -151,10 +167,18 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
         ),
         PageViewModel(
           bodyWidget: Container(),
-          titleWidget: Container(),
+          titleWidget: Container(
+            alignment: Alignment.center,
+            margin: EdgeInsets.only(top:150.0),
+            child: Text("Elite Family & Personal Protection Dogs Supplier",textAlign: TextAlign.center, style:TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 25.0,
+            )),
+          ),
           image: _buildFullscreenImage(
               'assets/Protection Dogs Worldwide-203.jpg',
-              "Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit\nconsectetur adipiscing elit"),
+              ""),
           decoration: pageDecoration.copyWith(
             contentMargin: const EdgeInsets.symmetric(horizontal: 16),
             fullScreen: true,
@@ -164,10 +188,18 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
         ),
         PageViewModel(
           bodyWidget: Container(),
-          titleWidget: Container(),
+          titleWidget: Container(
+            alignment: Alignment.center,
+            margin: EdgeInsets.only(top:150.0),
+            child: Text("Personal & Family Protection Dogs",textAlign: TextAlign.center, style:TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 25.0,
+            )),
+          ),
           image: _buildFullscreenImage(
               'assets/Protection Dogs Worldwide-257.jpg',
-              "Lorem ipsum dolor sit amet,\nconsectetur adipiscing elit\nconsectetur adipiscing elit"),
+              ""),
           decoration: pageDecoration.copyWith(
             contentMargin: const EdgeInsets.symmetric(horizontal: 16),
             fullScreen: true,
